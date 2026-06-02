@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Markers - Saltash WebAR Tour</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+
+        .intro p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .markers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .marker-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .marker-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .marker-preview {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: white;
+        }
+
+        .marker-info {
+            padding: 25px;
+        }
+
+        .marker-info h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .marker-name {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1e3c72;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .marker-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .download-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .instructions {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructions h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .instruction-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .instruction-step {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instruction-step h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .instruction-step p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #5568d3;
+        }
+
+        footer {
+            background: #1e3c72;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #a0c4ff;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            .marker-preview {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>🎯 AR Markers Guide</h1>
+        <p>Download and print these markers to experience the Saltash WebAR Tour</p>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Introduction -->
+        <div class="intro">
+            <h2>How to Use AR Markers</h2>
+            <p>
+                The Saltash WebAR Tour uses standard AR markers to trigger the augmented reality experience. Each marker corresponds to a different historical landmark in Saltash. To use the tour, you'll need to have these markers available—either printed on paper or displayed on a screen.
+            </p>
+            <p>
+                Below are the three markers used in the tour. You can download them, print them at full size (recommended 10cm × 10cm or larger), and then point your smartphone camera at them while using the AR tour to see the interactive 3D models and historical information.
+            </p>
+        </div>
+
+        <!-- Markers Grid -->
+        <div class="markers-grid">
+            <!-- HIRO Marker -->
+            <div class="marker-card">
+                <div class="marker-preview">🎯</div>
+                <div class="marker-info">
+                    <h3>HIRO Marker</h3>
+                    <span class="marker-name">Royal Albert Bridge</span>
+                    <p>
+                        This marker triggers the Royal Albert Bridge experience. Point your camera at this marker to see an animated 3D representation of Brunel's iconic bridge and learn about its history.
+                    </p>
+                    <a href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/HIRO.jpg" class="download-btn" download>📥 Download Marker</a>
+                </div>
+            </div>
+
+            <!-- KANJI Marker -->
+            <div class="marker-card">
+                <div class="marker-preview">🔷</div>
+                <div class="marker-info">
+                    <h3>KANJI Marker</h3>
+                    <span class="marker-name">Mary Newman's Bridge</span>
+                    <p>
+                        This marker reveals information about Mary Newman's Bridge and Saltash's maritime heritage. Discover the connections to Sir Francis Drake and the Age of Exploration.
+                    </p>
+                    <a href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/kanji.png" class="download-btn" download>📥 Download Marker</a>
+                </div>
+            </div>
+
+            <!-- LETTER A Marker -->
+            <div class="marker-card">
+                <div class="marker-preview">🔤</div>
+                <div class="marker-info">
+                    <h3>LETTER A Marker</h3>
+                    <span class="marker-name">Historic Saltash Town</span>
+                    <p>
+                        This marker showcases the historic town of Saltash itself, featuring its medieval heritage and importance in British maritime and industrial history.
+                    </p>
+                    <a href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/letterA.png" class="download-btn" download>📥 Download Marker</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h2>📋 Setup Instructions</h2>
+            <div class="instruction-steps">
+                <div class="instruction-step">
+                    <h3>1. Download Markers</h3>
+                    <p>Click the download button on each marker card to save the marker images to your computer.</p>
+                </div>
+                <div class="instruction-step">
+                    <h3>2. Print Markers</h3>
+                    <p>Print the markers on standard paper. Recommended size: 10cm × 10cm or larger. Ensure the printout is clear and not distorted.</p>
+                </div>
+                <div class="instruction-step">
+                    <h3>3. Open AR Tour</h3>
+                    <p>Visit the <a href="tour.html" style="color: #667eea; text-decoration: none; font-weight: bold;">AR Tour page</a> on your smartphone and allow camera access.</p>
+                </div>
+                <div class="instruction-step">
+                    <h3>4. Point & Explore</h3>
+                    <p>Point your smartphone camera at the printed markers. The AR experience will activate, showing 3D models and historical information.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="intro">
+            <h2>💡 Tips for Best Results</h2>
+            <ul style="margin-left: 20px; color: #666;">
+                <li style="margin-bottom: 10px;"><strong>Lighting:</strong> Use good lighting conditions. Avoid direct sunlight or very dark environments.</li>
+                <li style="margin-bottom: 10px;"><strong>Marker Size:</strong> Larger markers (15cm × 15cm or more) work better for detection.</li>
+                <li style="margin-bottom: 10px;"><strong>Distance:</strong> Hold your device 20-50cm away from the marker for optimal detection.</li>
+                <li style="margin-bottom: 10px;"><strong>Angle:</strong> Point your camera directly at the marker, not at an extreme angle.</li>
+                <li style="margin-bottom: 10px;"><strong>Quality:</strong> Print markers on high-quality paper for better recognition.</li>
+                <li style="margin-bottom: 10px;"><strong>Device:</strong> Use a smartphone or tablet with a good camera for the best experience.</li>
+            </ul>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="tour.html">AR Tour</a>
+                <a href="markers.html">Markers</a>
+            </div>
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; margin-top: 20px; color: #a0c4ff; font-size: 14px;">
+                <p>&copy; 2026 Saltash WebAR Historical Tour. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

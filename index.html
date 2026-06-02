@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Saltash, Cornwall's rich history through augmented reality. Visit the Royal Albert Bridge, Mary Newman's Bridge, and historic landmarks.">
+    <meta name="keywords" content="Saltash, AR tour, augmented reality, Cornwall, Royal Albert Bridge, Brunel">
+    <meta name="author" content="Saltash WebAR Tour">
+    <meta property="og:title" content="Saltash WebAR Historical Tour">
+    <meta property="og:description" content="Experience Saltash's history through interactive augmented reality">
+    <meta property="og:type" content="website">
+    <title>Saltash WebAR Historical Tour | Explore Cornwall's Heritage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 60px 20px;
+        }
+
+        .section h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #1e3c72;
+        }
+
+        .landmarks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .landmark-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .landmark-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .landmark-icon {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .landmark-content {
+            padding: 25px;
+        }
+
+        .landmark-content h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .landmark-content p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .marker-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1e3c72;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .features {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .how-to {
+            background: #f8f9fa;
+            padding: 60px 20px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .about {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: #1e3c72;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #a0c4ff;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            color: #a0c4ff;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section h2 {
+                font-size: 28px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin-left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                🏛️ Saltash WebAR Tour
+            </div>
+            <nav>
+                <a href="#landmarks">Landmarks</a>
+                <a href="#features">Features</a>
+                <a href="#how-to">How to Use</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Saltash Through Augmented Reality</h1>
+            <p>Experience the rich history of Cornwall's iconic landmarks through immersive AR technology</p>
+            <a href="tour.html" class="cta-button">🎯 Start AR Tour</a>
+        </div>
+    </section>
+
+    <!-- Landmarks Section -->
+    <section class="section" id="landmarks">
+        <div class="container">
+            <h2>Historical Landmarks</h2>
+            <div class="landmarks-grid">
+                <!-- Royal Albert Bridge -->
+                <div class="landmark-card">
+                    <div class="landmark-icon">🌉</div>
+                    <div class="landmark-content">
+                        <h3>The Royal Albert Bridge</h3>
+                        <p>Designed by Isambard Kingdom Brunel and completed in 1859, this wrought iron railway bridge is a masterpiece of Victorian engineering.</p>
+                        <span class="marker-badge">HIRO Marker</span>
+                    </div>
+                </div>
+
+                <!-- Mary Newman's Bridge -->
+                <div class="landmark-card">
+                    <div class="landmark-icon">⚓</div>
+                    <div class="landmark-content">
+                        <h3>Mary Newman's Bridge</h3>
+                        <p>Named after Mary Newman, wife of Sir Francis Drake, this historic bridge represents Saltash's maritime heritage and Age of Exploration connections.</p>
+                        <span class="marker-badge">KANJI Marker</span>
+                    </div>
+                </div>
+
+                <!-- Historic Saltash -->
+                <div class="landmark-card">
+                    <div class="landmark-icon">🏰</div>
+                    <div class="landmark-content">
+                        <h3>Historic Saltash Town</h3>
+                        <p>A medieval market town with roots in tin and copper exports, Saltash played a vital role in British maritime history.</p>
+                        <span class="marker-badge">LETTER A Marker</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Why Choose Our AR Tour?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile-First</h3>
+                    <p>Access directly from your smartphone browser—no app installation required</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Interactive 3D Models</h3>
+                    <p>View animated 3D representations of historical landmarks in real-time</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📚</div>
+                    <h3>Rich Historical Content</h3>
+                    <p>Learn detailed information about Saltash's heritage and significance</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Location-Based Learning</h3>
+                    <p>Perfect for educational tours, tourism, and cultural exploration</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Responsive</h3>
+                    <p>Optimized performance for smooth AR experiences on all devices</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy-Focused</h3>
+                    <p>All processing happens on your device—no data collection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to" id="how-to">
+        <div class="container">
+            <h2>How to Use the AR Tour</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Open on Mobile</h3>
+                    <p>Visit this site on your smartphone and tap "Start AR Tour"</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Allow Camera Access</h3>
+                    <p>Grant permission to access your device's camera</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Point at Markers</h3>
+                    <p>Point your camera at AR markers to trigger the experience</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Explore & Learn</h3>
+                    <p>Interact with 3D models and read historical information</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Saltash</h2>
+            <div class="about-content">
+                <p>
+                    <strong>Saltash</strong> is a historic market town located in Cornwall, England, situated on the west bank of the River Tamar. With roots dating back to medieval times, Saltash has played a significant role in British maritime history and industrial development.
+                </p>
+                <p>
+                    The town is most famous for the <strong>Royal Albert Bridge</strong>, an iconic Victorian engineering marvel designed by Isambard Kingdom Brunel. Completed in 1859, this wrought iron railway bridge spans the River Tamar and remains one of the most recognizable landmarks in Cornwall.
+                </p>
+                <p>
+                    Saltash's strategic location made it an important port for the export of tin and copper during the industrial era. The town's maritime heritage is deeply connected to the Age of Exploration, with connections to notable figures such as Sir Francis Drake.
+                </p>
+                <p>
+                    Today, Saltash continues to be a vibrant community that celebrates its rich history while embracing modern technology. This AR tour is designed to help visitors and residents alike discover and appreciate the historical significance of this remarkable Cornish town.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#landmarks">Landmarks</a>
+                <a href="#features">Features</a>
+                <a href="#how-to">How to Use</a>
+                <a href="tour.html">AR Tour</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Saltash WebAR Historical Tour. All rights reserved.</p>
+                <p>Powered by A-Frame and AR.js | Celebrating Saltash's Heritage</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
